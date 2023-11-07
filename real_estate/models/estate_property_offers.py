@@ -38,9 +38,8 @@ class EstatePropertyOffer(models.Model):
     def action_confirm_offer(self):
         self.ensure_one()
         self.status = "accepted"
-        linked_property = self.env['estate.property'].browse(self.property_id)
-        linked_property['selling_price'] = self.price
-        linked_property['buyer_id'] = self.partner_id
+        self.property_id.selling_price = self.price
+        self.property_id.buyer_id = self.partner_id
         return True
 
     def action_cancel_offer(self):
