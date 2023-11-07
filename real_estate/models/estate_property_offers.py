@@ -34,3 +34,16 @@ class EstatePropertyOffer(models.Model):
                 raise UserError("Can't make offers with a lower amount than the best offer.") 
             self.env['estate.property'].browse(vals['property_id'])['state'] = 'offer_received'
         return super().create(vals_list)
+
+    def action_confirm_offer(self):
+        self.ensure_one()
+        self.status = "accepted"
+        linked_property = self.env['estate.property'].browse(self.property_id)
+        linked_property['selling_price'] = self.price
+        linked_property['buyer_id'] = self.partner_id
+        return True
+
+    def action_cancel_offer(self):
+        self.ensure_one()
+        self.status = "refused"
+        return True
