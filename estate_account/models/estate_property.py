@@ -11,4 +11,4 @@ class EstatePropertyInherit(models.Model):
         # todo (not in this file)
         # add fancy status
         # https://www.odoo.com/documentation/master/developer/tutorials/getting_started/12_sprinkles.html
-        return super().inherited_action()
+        return super().button_property_sold()
