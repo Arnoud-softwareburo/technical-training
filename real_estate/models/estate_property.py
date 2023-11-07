@@ -70,3 +70,19 @@ class EstateProperty(models.Model):
     def _unlink_if_state_new_or_canceled(self):
         if self.state not in ["new", "canceled"]:
             raise UserError("Can't delete properties that are not new or canceled.")
+
+    def button_property_sold(self):
+        for record in self:
+            if record.state == "canceled":
+                raise UserError("Canceled properties can not be sold.")
+            else:
+                record.state = "sold"
+        return True
+
+    def button_property_cancel(self):
+        for record in self:
+            if record.state == "sold":
+                raise UserError("Sold properties can not be canceled")
+            else:
+                record.state = "canceled"
+        return True
